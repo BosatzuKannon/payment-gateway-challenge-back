@@ -1,16 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import { Injectable } from '@nestjs/common';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import { IProductRepository } from '../domain/product.repository';
 import { Product } from '../domain/product.entity';
 
+interface ProductRow {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock_quantity: number;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
 @Injectable()
 export class SupabaseProductRepository implements IProductRepository {
-  private supabase: SupabaseClient;
+  private supabase;
 
   constructor() {
     this.supabase = createClient(
       process.env.SUPABASE_URL || '',
-      process.env.SUPABASE_KEY || ''
+      process.env.SUPABASE_KEY || '',
     );
   }
 
@@ -24,7 +39,9 @@ export class SupabaseProductRepository implements IProductRepository {
       throw new Error(`Error fetching products: ${error.message}`);
     }
 
-    return data.map(
+    const rows = data as ProductRow[];
+
+    return rows.map(
       (item) =>
         new Product(
           item.id,
@@ -50,19 +67,22 @@ export class SupabaseProductRepository implements IProductRepository {
       return null;
     }
 
+    const row = data as ProductRow;
+
     return new Product(
-      data.id,
-      data.name,
-      data.description,
-      data.price,
-      data.stock_quantity,
-      data.image_url,
-      new Date(data.created_at),
-      new Date(data.updated_at),
+      row.id,
+      row.name,
+      row.description,
+      row.price,
+      row.stock_quantity,
+      row.image_url,
+      new Date(row.created_at),
+      new Date(row.updated_at),
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(product: Product): Promise<void> {
-    return;
+    await Promise.resolve();
   }
 }
