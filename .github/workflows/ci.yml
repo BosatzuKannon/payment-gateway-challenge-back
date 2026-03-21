@@ -30,4 +30,4 @@ jobs:
       run: npm run test -- --passWithNoTests
 
     - name: Run Test Coverage
-      run: npm run test:cov
+      run: npm run test:cov -- --passWithNoTests
