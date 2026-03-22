@@ -15,5 +15,6 @@ import { SupabaseProductRepository } from './supabase-product.repository';
       useClass: SupabaseProductRepository,
     },
   ],
+  exports: [PRODUCT_REPOSITORY],
 })
 export class StockModule {}
