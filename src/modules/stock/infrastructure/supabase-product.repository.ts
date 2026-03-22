@@ -81,8 +81,14 @@ export class SupabaseProductRepository implements IProductRepository {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(product: Product): Promise<void> {
-    await Promise.resolve();
+    const { error } = await this.supabase
+      .from('products')
+      .update({ stock_quantity: product.stockQuantity })
+      .eq('id', product.id);
+
+    if (error) {
+      throw new Error(`Error updating product stock: ${error.message}`);
+    }
   }
 }
