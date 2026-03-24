@@ -8,6 +8,12 @@ export class Transaction {
     public readonly totalAmount: number,
     private _status: TransactionStatus,
     public readonly createdAt: Date,
+    public readonly wompiId: string,
+    public readonly customerName: string,
+    public readonly customerEmail: string,
+    public readonly shippingAddress: string,
+    public readonly shippingCity: string,
+    public readonly shippingZipCode?: string,
   ) {}
 
   get status(): TransactionStatus {

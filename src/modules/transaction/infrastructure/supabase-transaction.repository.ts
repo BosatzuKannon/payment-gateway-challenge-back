@@ -27,6 +27,12 @@ export class SupabaseTransactionRepository implements ITransactionRepository {
         total_amount: transaction.totalAmount,
         status: transaction.status,
         created_at: transaction.createdAt.toISOString(),
+        wompi_id: transaction.wompiId,
+        customer_name: transaction.customerName,
+        customer_email: transaction.customerEmail,
+        shipping_address: transaction.shippingAddress,
+        shipping_city: transaction.shippingCity,
+        shipping_zip_code: transaction.shippingZipCode,
       },
     ]);
 
