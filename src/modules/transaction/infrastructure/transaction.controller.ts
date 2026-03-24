@@ -1,9 +1,11 @@
 import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import {
   CreateTransactionUseCase,
-  type CreateTransactionDto,
+  CreateTransactionDto,
 } from '../application/create-transaction.use-case';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
+@ApiTags('transactions')
 @Controller('transactions')
 export class TransactionController {
   constructor(
@@ -11,6 +13,9 @@ export class TransactionController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new payment transaction' })
+  @ApiResponse({ status: 201, description: 'Transaction completed successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid data or payment rejected.' })
   async create(@Body() body: CreateTransactionDto) {
     const result = await this.createTransactionUseCase.execute(body);
 
