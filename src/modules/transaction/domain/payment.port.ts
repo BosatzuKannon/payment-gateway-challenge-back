@@ -9,6 +9,10 @@ export interface PaymentResult {
 export const IPaymentPort = Symbol('IPaymentPort');
 
 export interface IPaymentPort {
-  charge(token: string, amountInCents: number, reference: string, customerEmail: string): Promise<Result<string>>;
+  charge(
+    token: string,
+    amountInCents: number,
+    reference: string,
+    customerEmail: string,
+  ): Promise<Result<string>>;
 }
-

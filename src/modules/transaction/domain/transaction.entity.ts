@@ -22,14 +22,18 @@ export class Transaction {
 
   markAsCompleted(): void {
     if (this._status !== 'pending') {
-      throw new Error('Solo las transacciones pendientes pueden ser completadas');
+      throw new Error(
+        'Solo las transacciones pendientes pueden ser completadas',
+      );
     }
     this._status = 'completed';
   }
 
   markAsFailed(): void {
     if (this._status !== 'pending') {
-      throw new Error('Solo las transacciones pendientes pueden ser marcadas como fallidas');
+      throw new Error(
+        'Solo las transacciones pendientes pueden ser marcadas como fallidas',
+      );
     }
     this._status = 'failed';
   }

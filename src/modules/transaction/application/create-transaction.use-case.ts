@@ -32,12 +32,11 @@ export class CreateTransactionUseCase {
     @Inject(PRODUCT_REPOSITORY)
     private readonly productRepository: IProductRepository,
 
-    @Inject(IPaymentPort) 
+    @Inject(IPaymentPort)
     private readonly paymentService: IPaymentPort,
   ) {}
 
   async execute(data: CreateTransactionDto): Promise<Result<Transaction>> {
-    
     const product = await this.productRepository.findById(data.productId);
     if (!product) {
       return fail(`El producto con ID ${data.productId} no existe.`);
@@ -50,9 +49,9 @@ export class CreateTransactionUseCase {
     }
 
     const baseCommission = 10000;
-    const totalAmount = (product.price * data.quantity) + baseCommission;
+    const totalAmount = product.price * data.quantity + baseCommission;
     const amountInCents = totalAmount * 100;
-    
+
     const transactionId = uuidv4();
     const reference = `ORD-${transactionId.substring(0, 8)}`;
     const email = data.customerEmail || 'cliente@ejemplo.com';
@@ -61,11 +60,13 @@ export class CreateTransactionUseCase {
       data.paymentToken,
       amountInCents,
       reference,
-      email
+      email,
     );
 
     if (!paymentResult.success) {
-      return fail(`El pago fue rechazado por la pasarela: ${paymentResult.error}`);
+      return fail(
+        `El pago fue rechazado por la pasarela: ${paymentResult.error}`,
+      );
     }
 
     product.decreaseStock(data.quantity);
@@ -86,7 +87,7 @@ export class CreateTransactionUseCase {
       data.customerEmail,
       data.shippingAddress,
       data.shippingCity,
-      data.shippingZipCode
+      data.shippingZipCode,
     );
 
     await this.transactionRepository.create(newTransaction);
