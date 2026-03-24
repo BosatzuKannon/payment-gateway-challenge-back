@@ -5,6 +5,9 @@ import { TRANSACTION_REPOSITORY } from '../domain/transaction.repository';
 import { SupabaseTransactionRepository } from './supabase-transaction.repository';
 import { StockModule } from '../../stock/infrastructure/stock.module';
 
+import { IPaymentPort } from '../domain/payment.port';
+import { WompiAdapter } from './wompi.adapter';
+
 @Module({
   imports: [StockModule],
   controllers: [TransactionController],
@@ -13,6 +16,10 @@ import { StockModule } from '../../stock/infrastructure/stock.module';
     {
       provide: TRANSACTION_REPOSITORY,
       useClass: SupabaseTransactionRepository,
+    },
+    {
+      provide: IPaymentPort,
+      useClass: WompiAdapter,
     },
   ],
 })

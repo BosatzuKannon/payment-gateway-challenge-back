@@ -19,19 +19,25 @@ export class SupabaseTransactionRepository implements ITransactionRepository {
   }
 
   async create(transaction: Transaction): Promise<void> {
-    const { error } = await this.supabase.from('transactions').insert([
-      {
-        id: transaction.id,
-        product_id: transaction.productId,
-        quantity: transaction.quantity,
-        total_amount: transaction.totalAmount,
-        status: transaction.status,
-        created_at: transaction.createdAt.toISOString(),
-      },
-    ]);
+  const { error } = await this.supabase.from('transactions').insert([
+    {
+      id: transaction.id,
+      product_id: transaction.productId,
+      quantity: transaction.quantity,
+      total_amount: transaction.totalAmount,
+      status: transaction.status,
+      created_at: transaction.createdAt.toISOString(),
+      wompi_id: transaction.wompiId,
+      customer_name: transaction.customerName,
+      customer_email: transaction.customerEmail,
+      shipping_address: transaction.shippingAddress,
+      shipping_city: transaction.shippingCity,
+      shipping_zip_code: transaction.shippingZipCode,
+    },
+  ]);
 
-    if (error) {
-      throw new Error(`Error saving transaction: ${error.message}`);
-    }
+  if (error) {
+    throw new Error(`Error saving transaction: ${error.message}`);
   }
+}
 }

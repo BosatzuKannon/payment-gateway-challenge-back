@@ -8,6 +8,12 @@ export class Transaction {
     public readonly totalAmount: number,
     private _status: TransactionStatus,
     public readonly createdAt: Date,
+    public readonly wompiId: string,
+    public readonly customerName: string,
+    public readonly customerEmail: string,
+    public readonly shippingAddress: string,
+    public readonly shippingCity: string,
+    public readonly shippingZipCode?: string,
   ) {}
 
   get status(): TransactionStatus {
@@ -16,18 +22,14 @@ export class Transaction {
 
   markAsCompleted(): void {
     if (this._status !== 'pending') {
-      throw new Error(
-        'Solo las transacciones pendientes pueden ser completadas',
-      );
+      throw new Error('Solo las transacciones pendientes pueden ser completadas');
     }
     this._status = 'completed';
   }
 
   markAsFailed(): void {
     if (this._status !== 'pending') {
-      throw new Error(
-        'Solo las transacciones pendientes pueden ser marcadas como fallidas',
-      );
+      throw new Error('Solo las transacciones pendientes pueden ser marcadas como fallidas');
     }
     this._status = 'failed';
   }
