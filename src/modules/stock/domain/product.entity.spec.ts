@@ -1,9 +1,17 @@
 import { Product } from './product.entity';
 
 describe('Product Entity', () => {
-  const createMockProduct = (stock: number) => new Product(
-    '1', 'Test', 'Desc', 1000, stock, 'img.jpg', new Date(), new Date()
-  );
+  const createMockProduct = (stock: number) =>
+    new Product(
+      '1',
+      'Test',
+      'Desc',
+      1000,
+      stock,
+      'img.jpg',
+      new Date(),
+      new Date(),
+    );
 
   it('should decrease stock when enough quantity is available', () => {
     const product = createMockProduct(10);

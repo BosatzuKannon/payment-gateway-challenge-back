@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { Injectable } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
 import { ITransactionRepository } from '../domain/transaction.repository';

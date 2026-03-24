@@ -2,7 +2,7 @@ import { TransactionController } from './transaction.controller';
 import { BadRequestException } from '@nestjs/common';
 
 jest.mock('uuid', () => ({
-  v4: () => '1234-5678-9012'
+  v4: () => '1234-5678-9012',
 }));
 
 describe('TransactionController', () => {
@@ -15,9 +15,13 @@ describe('TransactionController', () => {
   });
 
   it('should throw BadRequestException when result is failure', async () => {
-    useCase.execute.mockResolvedValue({ success: false, error: 'Error de prueba' });
+    useCase.execute.mockResolvedValue({
+      success: false,
+      error: 'Error de prueba',
+    });
 
-    await expect(controller.create({} as any))
-      .rejects.toThrow(BadRequestException);
+    await expect(controller.create({} as any)).rejects.toThrow(
+      BadRequestException,
+    );
   });
 });

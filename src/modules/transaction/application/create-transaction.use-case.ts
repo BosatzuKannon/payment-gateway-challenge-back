@@ -13,25 +13,38 @@ import { Result, success, fail } from './result';
 import { v4 as uuidv4 } from 'uuid';
 import { ApiProperty } from '@nestjs/swagger';
 
-
-
 export class CreateTransactionDto {
-  @ApiProperty({ description: 'The unique ID of the product', example: 'prod-123' })
+  @ApiProperty({
+    description: 'The unique ID of the product',
+    example: 'prod-123',
+  })
   productId: string;
 
   @ApiProperty({ description: 'Number of units to buy', example: 1 })
   quantity: number;
 
-  @ApiProperty({ description: 'Credit card token provided by Wompi widget', example: 'tok_test_123' })
+  @ApiProperty({
+    description: 'Credit card token provided by Wompi widget',
+    example: 'tok_test_123',
+  })
   paymentToken: string;
 
-  @ApiProperty({ description: 'Full name of the customer', example: 'Carlos Jaramillo' })
+  @ApiProperty({
+    description: 'Full name of the customer',
+    example: 'Carlos Jaramillo',
+  })
   customerName: string;
 
-  @ApiProperty({ description: 'Valid email address for transaction receipts', example: 'carlos@test.com' })
+  @ApiProperty({
+    description: 'Valid email address for transaction receipts',
+    example: 'carlos@test.com',
+  })
   customerEmail: string;
 
-  @ApiProperty({ description: 'Detailed shipping address', example: 'Calle 123 #45-67' })
+  @ApiProperty({
+    description: 'Detailed shipping address',
+    example: 'Calle 123 #45-67',
+  })
   shippingAddress: string;
 
   @ApiProperty({ description: 'City for delivery', example: 'Pasto' })

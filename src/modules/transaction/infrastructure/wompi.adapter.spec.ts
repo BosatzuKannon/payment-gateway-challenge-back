@@ -9,14 +9,18 @@ describe('WompiAdapter', () => {
     process.env.WOMPI_PUBLIC_KEY = 'pub_test_123';
     process.env.WOMPI_INTEGRITY_SECRET = 'secret_123';
     adapter = new WompiAdapter();
-    
+
     // Mock de fetch global (Node 18+)
     global.fetch = jest.fn();
   });
 
   it('should generate a valid SHA256 signature', () => {
     // Accedemos al método privado para testear la seguridad
-    const signature = (adapter as any).generateSignature('REF_001', 150000, 'COP');
+    const signature = (adapter as any).generateSignature(
+      'REF_001',
+      150000,
+      'COP',
+    );
     expect(signature).toBeDefined();
     expect(signature.length).toBe(64); // Longitud de SHA256
   });
@@ -29,19 +33,24 @@ describe('WompiAdapter', () => {
         json: async () => ({
           data: {
             presigned_acceptance: { acceptance_token: 'acc_1' },
-            presigned_personal_data_auth: { acceptance_token: 'per_1' }
-          }
-        })
+            presigned_personal_data_auth: { acceptance_token: 'per_1' },
+          },
+        }),
       })
       // Mock de la respuesta de Transacción
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({
-          data: { id: 'wompi_tx_999', status: 'APPROVED' }
-        })
+          data: { id: 'wompi_tx_999', status: 'APPROVED' },
+        }),
       });
 
-    const result = await adapter.charge('tok_123', 100000, 'REF_1', 'test@test.com');
+    const result = await adapter.charge(
+      'tok_123',
+      100000,
+      'REF_1',
+      'test@test.com',
+    );
 
     expect(result.success).toBe(true);
     if (result.success) {

@@ -14,7 +14,11 @@ export class StockController {
 
   @Get('products')
   @ApiOperation({ summary: 'Get all available products in stock' })
-  @ApiResponse({ status: 200, description: 'Return all products.', type: [Product] })
+  @ApiResponse({
+    status: 200,
+    description: 'Return all products.',
+    type: [Product],
+  })
   async getAllProducts() {
     const products = await this.getAllProductsUseCase.execute();
     return products;
@@ -22,7 +26,11 @@ export class StockController {
 
   @Get('products/:id')
   @ApiOperation({ summary: 'Get a specific product by its ID' })
-  @ApiResponse({ status: 200, description: 'Return the product details.', type: Product })
+  @ApiResponse({
+    status: 200,
+    description: 'Return the product details.',
+    type: Product,
+  })
   @ApiResponse({ status: 404, description: 'Product not found.' })
   async getProductById(@Param('id') id: string) {
     return await this.getProductByIdUseCase.execute(id);

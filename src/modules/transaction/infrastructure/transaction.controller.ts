@@ -14,8 +14,14 @@ export class TransactionController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new payment transaction' })
-  @ApiResponse({ status: 201, description: 'Transaction completed successfully.' })
-  @ApiResponse({ status: 400, description: 'Invalid data or payment rejected.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Transaction completed successfully.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid data or payment rejected.',
+  })
   async create(@Body() body: CreateTransactionDto) {
     const result = await this.createTransactionUseCase.execute(body);
 

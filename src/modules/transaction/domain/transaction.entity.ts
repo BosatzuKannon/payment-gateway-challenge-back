@@ -15,7 +15,10 @@ export class Transaction {
   @ApiProperty({ example: 1200000 })
   public readonly totalAmount: number;
 
-  @ApiProperty({ example: 'completed', enum: ['pending', 'completed', 'failed'] })
+  @ApiProperty({
+    example: 'completed',
+    enum: ['pending', 'completed', 'failed'],
+  })
   private _status: TransactionStatus;
 
   @ApiProperty({ example: '2026-03-24T00:00:00Z' })
@@ -74,14 +77,18 @@ export class Transaction {
 
   markAsCompleted(): void {
     if (this._status !== 'pending') {
-      throw new Error('Solo las transacciones pendientes pueden ser completadas');
+      throw new Error(
+        'Solo las transacciones pendientes pueden ser completadas',
+      );
     }
     this._status = 'completed';
   }
 
   markAsFailed(): void {
     if (this._status !== 'pending') {
-      throw new Error('Solo las transacciones pendientes pueden ser marcadas como fallidas');
+      throw new Error(
+        'Solo las transacciones pendientes pueden ser marcadas como fallidas',
+      );
     }
     this._status = 'failed';
   }

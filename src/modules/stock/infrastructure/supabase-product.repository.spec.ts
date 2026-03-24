@@ -12,8 +12,8 @@ const mockSupabaseQuery = {
 
 jest.mock('@supabase/supabase-js', () => ({
   createClient: jest.fn(() => ({
-    from: jest.fn(() => mockSupabaseQuery)
-  }))
+    from: jest.fn(() => mockSupabaseQuery),
+  })),
 }));
 
 describe('SupabaseProductRepository', () => {
@@ -26,14 +26,20 @@ describe('SupabaseProductRepository', () => {
     repository = new SupabaseProductRepository();
   });
 
-  const mockProductRow = { 
-    id: '1', name: 'P1', price: 10, stock_quantity: 5, 
-    created_at: new Date().toISOString(), updated_at: new Date().toISOString() 
+  const mockProductRow = {
+    id: '1',
+    name: 'P1',
+    price: 10,
+    stock_quantity: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   };
 
   it('should find all products', async () => {
     // Simulamos que el objeto de la consulta se resuelve como una promesa
-    (mockSupabaseQuery.order as jest.Mock).mockReturnValue(Promise.resolve({ data: [mockProductRow], error: null }));
+    mockSupabaseQuery.order.mockReturnValue(
+      Promise.resolve({ data: [mockProductRow], error: null }),
+    );
 
     const result = await repository.findAll();
     expect(result[0]).toBeInstanceOf(Product);
@@ -41,14 +47,20 @@ describe('SupabaseProductRepository', () => {
   });
 
   it('should find product by id', async () => {
-    (mockSupabaseQuery.single as jest.Mock).mockReturnValue(Promise.resolve({ data: mockProductRow, error: null }));
+    mockSupabaseQuery.single.mockReturnValue(
+      Promise.resolve({ data: mockProductRow, error: null }),
+    );
 
     const result = await repository.findById('1');
     expect(result?.id).toBe('1');
   });
 
   it('should throw error if findAll fails', async () => {
-    (mockSupabaseQuery.order as jest.Mock).mockReturnValue(Promise.resolve({ data: null, error: { message: 'Fail' } }));
-    await expect(repository.findAll()).rejects.toThrow('Error fetching products: Fail');
+    mockSupabaseQuery.order.mockReturnValue(
+      Promise.resolve({ data: null, error: { message: 'Fail' } }),
+    );
+    await expect(repository.findAll()).rejects.toThrow(
+      'Error fetching products: Fail',
+    );
   });
 });

@@ -6,9 +6,9 @@ const mockInsert = jest.fn();
 jest.mock('@supabase/supabase-js', () => ({
   createClient: jest.fn(() => ({
     from: jest.fn(() => ({
-      insert: mockInsert
-    }))
-  }))
+      insert: mockInsert,
+    })),
+  })),
 }));
 
 describe('SupabaseTransactionRepository', () => {
@@ -22,8 +22,18 @@ describe('SupabaseTransactionRepository', () => {
   });
 
   const mockTx = new Transaction(
-    '123', 'prod-1', 2, 12000, 'completed', new Date(), 'w-1',
-    'Carlos', 'carlos@test.com', 'Calle 1', 'Pasto', '520001'
+    '123',
+    'prod-1',
+    2,
+    12000,
+    'completed',
+    new Date(),
+    'w-1',
+    'Carlos',
+    'carlos@test.com',
+    'Calle 1',
+    'Pasto',
+    '520001',
   );
 
   it('should call supabase.insert with correct data', async () => {
@@ -31,22 +41,24 @@ describe('SupabaseTransactionRepository', () => {
 
     await repository.create(mockTx);
 
-    expect(mockInsert).toHaveBeenCalledWith([expect.objectContaining({
-      id: '123',
-      total_amount: 12000,
-      customer_email: 'carlos@test.com'
-    })]);
+    expect(mockInsert).toHaveBeenCalledWith([
+      expect.objectContaining({
+        id: '123',
+        total_amount: 12000,
+        customer_email: 'carlos@test.com',
+      }),
+    ]);
   });
 
   it('should throw error when supabase insert fails', async () => {
     // Forzamos el error de Supabase
-    mockInsert.mockResolvedValue({ 
-      error: { message: 'Database Connection Error' } 
+    mockInsert.mockResolvedValue({
+      error: { message: 'Database Connection Error' },
     });
 
     // Verificamos que el repositorio capture ese error y lance el suyo
-    await expect(repository.create(mockTx))
-      .rejects
-      .toThrow('Error saving transaction: Database Connection Error');
+    await expect(repository.create(mockTx)).rejects.toThrow(
+      'Error saving transaction: Database Connection Error',
+    );
   });
 });
