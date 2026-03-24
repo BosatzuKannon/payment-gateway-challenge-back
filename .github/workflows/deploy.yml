@@ -2,7 +2,7 @@ name: Build and Push to ECR
 
 on:
   push:
-    branches: [ feat/dockerization ] # Por ahora disparamos desde tu rama actual
+    branches: [ main ]
 
 jobs:
   deploy:
