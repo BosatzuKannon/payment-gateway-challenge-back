@@ -17,7 +17,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22.18.0'
+        node-version: '22'
         cache: 'npm'
 
     - name: Install dependencies
@@ -26,8 +26,11 @@ jobs:
     - name: Run Linter
       run: npm run lint
 
-    - name: Run Unit Tests
-      run: npm run test -- --passWithNoTests
-
     - name: Run Test Coverage
-      run: npm run test:cov -- --passWithNoTests
+      env:
+        SUPABASE_URL: http://localhost:5432
+        SUPABASE_KEY: dummy_key
+        WOMPI_PUBLIC_KEY: pub_test_123
+        WOMPI_PRIVATE_KEY: prv_test_123
+        WOMPI_INTEGRITY_SECRET: secret_123
+      run: npm run test:cov -- --passWithNoTests --watchAll=false

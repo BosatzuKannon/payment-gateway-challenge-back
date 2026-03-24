@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "87e3d2a1-1234-4a5b-8c9d-1234567890ab",
+		"name": "Payment Challenge - Carlos Jaramillo",
+		"description": "Endpoints para la pasarela de pagos - Arquitectura Hexagonal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Stock",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stock/products",
+							"host": ["{{base_url}}"],
+							"path": ["stock", "products"]
+						}
+					}
+				},
+				{
+					"name": "Get Product By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stock/products/prod-uuid-123",
+							"host": ["{{base_url}}"],
+							"path": ["stock", "products", "prod-uuid-123"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Create Transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": \"ID_DEL_PRODUCTO_AQUI\",\n    \"quantity\": 1,\n    \"paymentToken\": \"tok_test_12345\",\n    \"customerName\": \"Carlos Jaramillo\",\n    \"customerEmail\": \"carlos@test.com\",\n    \"shippingAddress\": \"Calle 123 #45-67\",\n    \"shippingCity\": \"Pasto\",\n    \"shippingZipCode\": \"520001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions",
+							"host": ["{{base_url}}"],
+							"path": ["transactions"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://wcq9jnemqv.us-east-2.awsapprunner.com/api",
+			"type": "string"
+		}
+	]
+}
